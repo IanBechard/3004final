@@ -6,14 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->listWidget->addItem("yeet");
-    ui->listWidget->addItem("yuh");
-    ui->listWidget->addItem("yeet");
-    ui->listWidget->addItem("yuh");
-    ui->listWidget->addItem("yeet");
-    ui->listWidget->addItem("yuh");
-    ui->listWidget->addItem("yeet");
-    ui->listWidget->addItem("yuh");
+    ui->listWidget->addItem("Program");
+    ui->listWidget->addItem("Frequency");
 }
 
 MainWindow::~MainWindow()
@@ -52,4 +46,21 @@ int MainWindow::validSelection(int x, int count)
     }
     return x;
 
+}
+
+void MainWindow::menuHandler(QString s)
+{
+    std::vector<QString> programs{"program1", "program2", "program3"};
+    std::vector<QString> frequencies{"frequency1", "frequency2", "frequency3"};
+    if (s == "Programs"){
+        updateList(programs);
+    }
+    else {
+        updateList(frequencies);
+    }
+}
+
+void MainWindow::on_selectButton_clicked()
+{
+    menuHandler(ui->listWidget->currentItem()->text());
 }

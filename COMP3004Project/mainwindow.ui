@@ -29,11 +29,23 @@
       <pointsize>22</pointsize>
      </font>
     </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
     <property name="horizontalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="showDropIndicator" stdset="0">
+     <bool>true</bool>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::SingleSelection</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="backButton">

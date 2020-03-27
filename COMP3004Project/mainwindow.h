@@ -24,6 +24,9 @@ private slots:
 
     int validSelection(int x, int count);
 
+    void on_selectButton_clicked();
+
+    void menuHandler(QString s);
 private:
     Ui::MainWindow *ui;
 };
