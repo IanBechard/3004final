@@ -15,6 +15,13 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_downButton_clicked();
+
+    void on_upButton_clicked();
+
+    int validSelection(int x, int count);
+
 private:
     Ui::MainWindow *ui;
 };
