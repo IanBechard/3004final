@@ -31,6 +31,16 @@ void MainWindow::on_upButton_clicked()
     ui->listWidget->setCurrentRow(validSelection(ui->listWidget->currentRow() - 1, ui->listWidget->count()));
 }
 
+void MainWindow::updateList(std::vector<QString> l)
+{
+    ui->listWidget->clear();
+
+    for(auto item: l){
+        ui->listWidget->addItem(item);
+    }
+
+}
+
 //for verifying that up/down buttons will never leave the menu
 int MainWindow::validSelection(int x, int count)
 {

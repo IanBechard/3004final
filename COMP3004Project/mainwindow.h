@@ -20,6 +20,8 @@ private slots:
 
     void on_upButton_clicked();
 
+    void updateList(std::vector<QString> l);
+
     int validSelection(int x, int count);
 
 private:
