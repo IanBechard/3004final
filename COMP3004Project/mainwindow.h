@@ -26,7 +26,12 @@ private slots:
 
     void on_selectButton_clicked();
 
-    void menuHandler(QString s);
+    void selectMenuHandler(QString s);
+
+    void backMenuHandler(QString s);
+
+    void on_backButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
