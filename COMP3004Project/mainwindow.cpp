@@ -63,37 +63,24 @@ int MainWindow::validSelection(int x, int count)
 
 void MainWindow::selectMenuHandler(QString s)
 {
-    std::vector<QString> programs{"program1", "program2", "program3"};
-    std::vector<QString> frequencies{"frequency1", "frequency2", "frequency3"};
 
     if (s == "Program"){
-        updateList(programs);
+        updateList(progsMenu.getProgramsNames());
         //setheader to "Programs"
         on_downButton_clicked();
     }
     else if (s == "Frequency"){
-        updateList(frequencies);
+        updateList(freqMenu.getFrequenciesNames());
         //setheader to "Frequencies"
         on_downButton_clicked();
     }
-    else if (count(programs.begin(), programs.end(),  s) > 0)
-    {
-        //delegate to programs
-        on_downButton_clicked();
-    }
-    else if(count(frequencies.begin(), frequencies.end(),  s) > 0)
-    {
-        //delegate to frequencies
-        on_downButton_clicked();
-    }
-
 }
 
 void MainWindow::backMenuHandler(QString s)
 {
     std::vector<QString> mainmenu{"Program", "Frequency"};
-    std::vector<QString> programs{"program1", "program2", "program3"};
-    std::vector<QString> frequencies{"frequency1", "frequency2", "frequency3"};
+    std::vector<QString> programs = progsMenu.getProgramsNames();
+    std::vector<QString> frequencies  = freqMenu.getFrequenciesNames();
 
     if (count(programs.begin(), programs.end(),  s) > 0 || count(frequencies.begin(), frequencies.end(),  s) > 0)
     {

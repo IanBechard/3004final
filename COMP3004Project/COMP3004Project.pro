@@ -25,11 +25,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        frequency.cpp \
+        frequencymenu.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        program.cpp \
+        programsmenu.cpp
 
 HEADERS += \
-        mainwindow.h
+        frequency.h \
+        frequencymenu.h \
+        mainwindow.h \
+        program.h \
+        programsmenu.h
 
 FORMS += \
         mainwindow.ui

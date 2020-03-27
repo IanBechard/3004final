@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <programsmenu.h>
+#include <frequencymenu.h>
 
 namespace Ui {
 class MainWindow;
@@ -34,6 +36,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    frequencyMenu freqMenu;
+    programsMenu progsMenu;
 };
 
 #endif // MAINWINDOW_H
