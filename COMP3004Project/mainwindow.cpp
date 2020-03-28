@@ -24,6 +24,8 @@ void MainWindow::power_on(){
     setMainMenu();
     ui->menuLabel->setText("Main Menu");
     on_downButton_clicked();
+    power.setPower(0);
+    electrodesConnected = false;
     ui->batteryTag->setText(QString::number(b.getPercentage()));
     timer->start(5000);
 }
@@ -62,6 +64,9 @@ void MainWindow::toggleButtons(){
 void MainWindow::updateCaption(){
     b.degenerate();
     ui->batteryTag->setText(QString::number(b.getPercentage()));
+    if (b.getPercentage() <= 0){
+        power_off();
+    }
 }
 MainWindow::~MainWindow()
 {
@@ -166,10 +171,39 @@ void MainWindow::setMainMenu()
 
 void MainWindow::on_powerButton_clicked()
 {
-    if (!powerOn){
+    if (!powerOn && b.getPercentage() > 0){
         power_on();
     }
     else{
         power_off();
+    }
+}
+
+void MainWindow::on_electrodesConnected_clicked()
+{
+    if (electrodesConnected){
+        electrodesConnected = false;
+        b.setDegen(1);
+    }
+    else{
+        electrodesConnected = true;
+        b.setDegen(power.getPower());
+
+    }
+
+}
+
+void MainWindow::on_leftButton_clicked()
+{
+    power.decreasePower();
+    if (electrodesConnected){
+        b.setDegen(power.getPower());
+    }
+}
+void MainWindow::on_rightButton_clicked()
+{
+    power.increasePower();
+    if (electrodesConnected){
+        b.setDegen(power.getPower());
     }
 }

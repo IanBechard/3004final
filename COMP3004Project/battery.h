@@ -12,7 +12,7 @@ public:
     }
     void setDegen(int d){degenRate = d;}
     void degenerate(){
-        percentage -= degenRate * 0.25;
+        percentage -= degenRate * 0.025;
     }
     double getPercentage(){
         return percentage;

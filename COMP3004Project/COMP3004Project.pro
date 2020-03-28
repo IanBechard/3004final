@@ -39,6 +39,7 @@ HEADERS += \
         frequency.h \
         frequencymenu.h \
         mainwindow.h \
+        powerlevel.h \
         program.h \
         programsmenu.h \
         settings.h \

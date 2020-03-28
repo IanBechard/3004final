@@ -7,6 +7,7 @@
 #include <settingsmenu.h>
 #include <battery.h>
 #include <qtimer.h>
+#include <powerlevel.h>
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +21,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     Battery b;
     bool powerOn = false;
+    bool electrodesConnected = false;
+    PowerLevel power;
     QTimer *timer = new QTimer(this);
     ~MainWindow();
 
@@ -51,6 +54,12 @@ private slots:
     void setMainMenu();
 
     void on_powerButton_clicked();
+
+    void on_electrodesConnected_clicked();
+
+    void on_leftButton_clicked();
+
+    void on_rightButton_clicked();
 
 private:
     Ui::MainWindow *ui;
