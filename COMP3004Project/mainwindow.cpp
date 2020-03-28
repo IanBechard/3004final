@@ -71,7 +71,7 @@ void MainWindow::updateCaption(){
 }
 MainWindow::~MainWindow()
 {
-    delete ui; //oh no
+    delete ui; //oh no, stinky
 }
 
 void MainWindow::on_downButton_clicked()
@@ -137,7 +137,7 @@ void MainWindow::selectMenuHandler(QString s)
 
 void MainWindow::backMenuHandler(QString s)
 {
-    std::vector<QString> mainmenu{"Program", "Frequency"};
+    std::vector<QString> mainmenu{"Program", "Frequency", "MED", "Screening", "Children", "Setting"};
     std::vector<QString> programs = progsMenu.getProgramsNames();
     std::vector<QString> frequencies  = freqMenu.getFrequenciesNames();
 
