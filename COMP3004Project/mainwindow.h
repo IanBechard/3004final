@@ -22,6 +22,8 @@ public:
     QTimer *timer = new QTimer(this);
     ~MainWindow();
 
+public slots:
+    void toggleButtons();
 private slots:
     void on_downButton_clicked();
 

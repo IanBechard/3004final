@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::power_on(){
     powerOn=true;
+    toggleButtons();
     ui->listWidget->setStyleSheet("""QListWidget{background: white;}""");
     ui->listWidget->addItem("Program");
     ui->listWidget->addItem("Frequency");
@@ -29,12 +30,33 @@ void MainWindow::power_on(){
 
 void MainWindow::power_off(){
     powerOn=false;
+    toggleButtons();
     ui->batteryTag->clear();
     ui->listWidget->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
     timer->stop();
 }
 
+void MainWindow::toggleButtons(){
+    if (powerOn){
+    ui->backButton->setEnabled(true);
+    ui->burgerButton->setEnabled(true);
+    ui->upButton->setEnabled(true);
+    ui->downButton->setEnabled(true);
+    ui->leftButton->setEnabled(true);
+    ui->rightButton->setEnabled(true);
+    ui->selectButton->setEnabled(true);
+    }
+    else{
+        ui->backButton->setEnabled(false);
+        ui->burgerButton->setEnabled(false);
+        ui->upButton->setEnabled(false);
+        ui->downButton->setEnabled(false);
+        ui->leftButton->setEnabled(false);
+        ui->rightButton->setEnabled(false);
+        ui->selectButton->setEnabled(false);
+    }
+}
 
 void MainWindow::updateCaption(){
     b.degenerate();
