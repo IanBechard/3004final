@@ -2,9 +2,9 @@
 
 programsMenu::programsMenu()
 {
-    program a = * new program("aaa");
-    program b = * new program("bbb");
-    program c = * new program("ccc");
+    program a = * new program("Allergy");
+    program b = * new program("Pain");
+    program c = * new program("CBT");
     programs = {a, b, c};
 }
 

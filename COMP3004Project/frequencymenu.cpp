@@ -2,9 +2,9 @@
 
 frequencyMenu::frequencyMenu()
 {
-    frequency a = * new frequency("aaa");
-    frequency b = * new frequency("bbb");
-    frequency c = * new frequency("ccc");
+    frequency a = * new frequency("1.0-9.9 Hz");
+    frequency b = * new frequency("10 Hz");
+    frequency c = * new frequency("20 Hz");
     frequencies = {a, b, c};
 }
 
