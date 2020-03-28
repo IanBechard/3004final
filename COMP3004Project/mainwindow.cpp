@@ -23,6 +23,11 @@ void MainWindow::power_on(){
     ui->listWidget->setStyleSheet("""QListWidget{background: white;}""");
     ui->listWidget->addItem("Program");
     ui->listWidget->addItem("Frequency");
+    ui->listWidget->addItem("MED");
+    ui->listWidget->addItem("Screening");
+    ui->listWidget->addItem("Children");
+    ui->listWidget->addItem("Settings");
+
     ui->menuLabel->setText("Main Menu");
     on_downButton_clicked();
     ui->batteryTag->setText(QString::number(b.getPercentage()));
