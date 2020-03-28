@@ -23,6 +23,7 @@ void MainWindow::power_on(){
     ui->listWidget->setStyleSheet("""QListWidget{background: white;}""");
     ui->listWidget->addItem("Program");
     ui->listWidget->addItem("Frequency");
+    ui->menuLabel->setText("Main Menu");
     on_downButton_clicked();
     ui->batteryTag->setText(QString::number(b.getPercentage()));
     timer->start(5000);
@@ -33,6 +34,7 @@ void MainWindow::power_off(){
     toggleButtons();
     ui->batteryTag->clear();
     ui->listWidget->clear();
+    ui->menuLabel->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
     timer->stop();
 }
@@ -116,11 +118,13 @@ void MainWindow::selectMenuHandler(QString s)
 
     if (s == "Program"){
         updateList(progsMenu.getProgramsNames());
+        ui->menuLabel->setText("Program");
         //setheader to "Programs"
         on_downButton_clicked();
     }
     else if (s == "Frequency"){
         updateList(freqMenu.getFrequenciesNames());
+        ui->menuLabel->setText("Frequency");
         //setheader to "Frequencies"
         on_downButton_clicked();
     }
@@ -135,6 +139,7 @@ void MainWindow::backMenuHandler(QString s)
     if (count(programs.begin(), programs.end(),  s) > 0 || count(frequencies.begin(), frequencies.end(),  s) > 0)
     {
         updateList(mainmenu);
+        ui->menuLabel->setText("Main Menu");
         //set header to main menu
         on_downButton_clicked();
     }
