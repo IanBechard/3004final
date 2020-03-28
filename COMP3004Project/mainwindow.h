@@ -48,6 +48,8 @@ private slots:
 
     void power_off();
 
+    void setMainMenu();
+
     void on_powerButton_clicked();
 
 private:

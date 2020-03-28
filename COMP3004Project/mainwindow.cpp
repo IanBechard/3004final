@@ -21,13 +21,7 @@ void MainWindow::power_on(){
     powerOn=true;
     toggleButtons();
     ui->listWidget->setStyleSheet("""QListWidget{background: white;}""");
-    ui->listWidget->addItem("Program");
-    ui->listWidget->addItem("Frequency");
-    ui->listWidget->addItem("MED");
-    ui->listWidget->addItem("Screening");
-    ui->listWidget->addItem("Children");
-    ui->listWidget->addItem("Settings");
-
+    setMainMenu();
     ui->menuLabel->setText("Main Menu");
     on_downButton_clicked();
     ui->batteryTag->setText(QString::number(b.getPercentage()));
@@ -143,14 +137,13 @@ void MainWindow::selectMenuHandler(QString s)
 
 void MainWindow::backMenuHandler(QString s)
 {
-    std::vector<QString> mainmenu{"Program", "Frequency", "MED", "Screening", "Children", "Settings"};
     std::vector<QString> programs = progsMenu.getProgramsNames();
     std::vector<QString> frequencies  = freqMenu.getFrequenciesNames();
     std::vector<QString> settingsS  = settMenu.getSettingsSNames();
 
     if (count(programs.begin(), programs.end(),  s) > 0 || count(frequencies.begin(), frequencies.end(),  s) > 0 || count(settingsS.begin(), settingsS.end(),  s) > 0) // || count(settingsS.begin(), settingsS.end(),  s) > 0
     {
-        updateList(mainmenu);
+        setMainMenu();
         ui->menuLabel->setText("Main Menu");
         //set header to main menu
         on_downButton_clicked();
@@ -164,7 +157,11 @@ void MainWindow::backMenuHandler(QString s)
 }
 
 
-
+void MainWindow::setMainMenu()
+{
+    std::vector<QString> mainmenu{"Program", "Frequency", "MED", "Screening", "Children", "Settings"};
+    updateList(mainmenu);
+}
 
 
 void MainWindow::on_powerButton_clicked()
