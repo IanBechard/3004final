@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <programsmenu.h>
 #include <frequencymenu.h>
+#include <battery.h>
+#include <qtimer.h>
 
 namespace Ui {
 class MainWindow;
@@ -15,6 +17,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    Battery b;
     ~MainWindow();
 
 private slots:
@@ -33,6 +36,8 @@ private slots:
     void backMenuHandler(QString s);
 
     void on_backButton_clicked();
+
+    void updateCaption();
 
 private:
     Ui::MainWindow *ui;

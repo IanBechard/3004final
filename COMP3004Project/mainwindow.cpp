@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -10,8 +11,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->listWidget->addItem("Program");
     ui->listWidget->addItem("Frequency");
     on_downButton_clicked();
+
+    //to be used for the battery class
+    QTimer *timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
+        timer->start(5000);
+
 }
 
+//runs every second
+void MainWindow::updateCaption(){
+    b.degenerate();
+    ui->batteryTag->setText(QString::number(b.getPercentage()));
+}
 MainWindow::~MainWindow()
 {
     delete ui;

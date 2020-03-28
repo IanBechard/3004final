@@ -33,6 +33,7 @@ SOURCES += \
         programsmenu.cpp
 
 HEADERS += \
+        battery.h \
         frequency.h \
         frequencymenu.h \
         mainwindow.h \
