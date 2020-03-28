@@ -8,25 +8,41 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->listWidget->addItem("Program");
-    ui->listWidget->addItem("Frequency");
-    on_downButton_clicked();
-
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
+    power_off();
     //to be used for the battery class
-    QTimer *timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
-        timer->start(5000);
+
 
 }
 
 //runs every second
+
+void MainWindow::power_on(){
+    powerOn=true;
+    ui->listWidget->setStyleSheet("""QListWidget{background: white;}""");
+    ui->listWidget->addItem("Program");
+    ui->listWidget->addItem("Frequency");
+    on_downButton_clicked();
+    ui->batteryTag->setText(QString::number(b.getPercentage()));
+    timer->start(5000);
+}
+
+void MainWindow::power_off(){
+    powerOn=false;
+    ui->batteryTag->clear();
+    ui->listWidget->clear();
+    ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
+    timer->stop();
+}
+
+
 void MainWindow::updateCaption(){
     b.degenerate();
     ui->batteryTag->setText(QString::number(b.getPercentage()));
 }
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete ui; //oh no
 }
 
 void MainWindow::on_downButton_clicked()
@@ -111,3 +127,13 @@ void MainWindow::backMenuHandler(QString s)
 
 
 
+
+void MainWindow::on_powerButton_clicked()
+{
+    if (!powerOn){
+        power_on();
+    }
+    else{
+        power_off();
+    }
+}
