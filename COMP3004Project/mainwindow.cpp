@@ -143,7 +143,7 @@ void MainWindow::selectMenuHandler(QString s)
 
 void MainWindow::backMenuHandler(QString s)
 {
-    std::vector<QString> mainmenu{"Program", "Frequency", "MED", "Screening", "Children", "Setting"};
+    std::vector<QString> mainmenu{"Program", "Frequency", "MED", "Screening", "Children", "Settings"};
     std::vector<QString> programs = progsMenu.getProgramsNames();
     std::vector<QString> frequencies  = freqMenu.getFrequenciesNames();
     std::vector<QString> settingsS  = settMenu.getSettingsSNames();
