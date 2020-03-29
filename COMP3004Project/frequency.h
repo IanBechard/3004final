@@ -6,11 +6,13 @@
 class frequency
 {
 public:
-    frequency(QString n);
+    frequency(QString n, int t);
     QString getName();
+    int getTime();
 
 private:
     QString name;
+    int time;
 };
 
 #endif // FREQUENCY_H
