@@ -15,6 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUG REPORT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//1)    Not having electrodes connected will pause battery drain
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 //runs every second
 
 void MainWindow::power_on(){
@@ -27,7 +32,7 @@ void MainWindow::power_on(){
     power.setPower(0);
     electrodesConnected = false;
     ui->batteryTag->setText(QString::number(b.getPercentage()));
-    timer->start(5000);
+    timer->start(15);
 }
 
 void MainWindow::power_off(){
