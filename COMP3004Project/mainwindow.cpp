@@ -187,7 +187,12 @@ void MainWindow::on_electrodesConnected_clicked()
     }
     else{
         electrodesConnected = true;
+        if (power.getPower() == 0){
+            b.setDegen(1);
+        }
+        else{
         b.setDegen(power.getPower());
+        }
 
     }
 
