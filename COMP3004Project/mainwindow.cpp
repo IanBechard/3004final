@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
+    connect(programTimer, SIGNAL(timeout()), this, SLOT(updateProgramTimer()));
     //connect(menuTimer, SIGNAL(timeout()), this, SLOT(updateMenuTimer()));
     power_off();
     //to be used for the battery class
@@ -73,8 +74,12 @@ void MainWindow::updateCaption(){
     if (b.getPercentage() <= 0){
         power_off();
     }
+}
 
-
+void MainWindow::updateProgramTimer(){
+    //int++;
+    //some sort of int -> 00:00 converter to display to screen
+    //something->setText(QString::number(the 00:00 variable)
 }
 
 void MainWindow::updateMenuTimer(){
@@ -163,6 +168,8 @@ void MainWindow::selectMenuHandler(QString s)
         //}
     }
     else if (s == "Pain"){
+        //programTimer->start(1000); // this will start the timer running every second
+        //UPDATING THE SCREEN MUST HAPPEN IN THE updateProgramTimer METHOD
         int count = 1;
         double time_counter = 0;
         clock_t this_time = clock();

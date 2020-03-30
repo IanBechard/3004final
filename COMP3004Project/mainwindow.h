@@ -26,6 +26,7 @@ public:
     bool electrodesConnected = false;
     PowerLevel power;
     QTimer *timer = new QTimer(this);
+    QTimer *programTimer = new QTimer(this);
     //QTimer *menuTimer = new QTimer(this);
     QElapsedTimer menuTimer;
     ~MainWindow();
@@ -50,6 +51,8 @@ private slots:
     void on_backButton_clicked();
 
     void updateCaption();
+
+    void updateProgramTimer();
 
     void updateMenuTimer();
 
