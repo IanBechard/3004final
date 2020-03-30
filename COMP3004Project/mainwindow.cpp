@@ -75,12 +75,21 @@ void MainWindow::updateCaption(){
     }
 }
 
-void MainWindow::updateProgramTimer(){
-    updateMenuCounter++;//should be number of seconds
-    if (updateMenuCounter >= 5){
+void MainWindow::updateProgramTimer(){//ui->rightButton->setEnabled(true);//testing only
+    //updateMenuCounter++;//should be number of seconds
+
+    if (updateMenuCounter >= 5){//menuType.getTime()                 //if the treatment has reached its end
         ui->rightButton->setEnabled(true);
         programTimer->stop();
     }
+    else if (electrodesConnected == false && updateMenuCounter <= 5){//if electrodes are off...
+        ui->leftButton->setEnabled(false);
+    }
+    else{                                                            //if electrodes are on && treatment is not over
+        updateMenuCounter++;
+        ui->leftButton->setEnabled(true);
+    }
+
 
     //some sort of int -> 00:00 converter to display to screen
     //something->setText(QString::number(the 00:00 variable)
@@ -88,7 +97,7 @@ void MainWindow::updateProgramTimer(){
 
 MainWindow::~MainWindow()
 {
-    delete ui; //oh no, stinky
+    delete ui; //uh oh, stinky
 }
 
 void MainWindow::on_downButton_clicked()
@@ -156,21 +165,15 @@ void MainWindow::selectMenuHandler(QString s)
         //setheader to "SettingsS"
         on_downButton_clicked();
     }
-    else if (s == "Allergy"){//<--- Works
-        //go into new menu???
-        //getTime on menu object
-        //start timer
-        //sent drain rate
-        //while loop{
-        //  if electrodes off
-        //  pause timer
-        //  revert drain rate(not pause)
-        //}
+    else if (s == "Allergy"){
+
     }
     else if (s == "Pain"){
         updateMenuCounter = 0;
+        menuType = "Pain";
+        ui->rightButton->setEnabled(false); //testing only
         programTimer->start(1000); // this will start the timer running every second
-        ui->rightButton->setEnabled(false);
+
         //UPDATING THE SCREEN MUST HAPPEN IN THE updateProgramTimer METHOD
     }
     else if (s == "CBT"){
