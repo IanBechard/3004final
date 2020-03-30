@@ -8,8 +8,7 @@
 #include <battery.h>
 #include <qtimer.h>
 #include <powerlevel.h>
-#include <qelapsedtimer.h>
-#include <time.h>
+
 
 namespace Ui {
 class MainWindow;
@@ -27,8 +26,7 @@ public:
     PowerLevel power;
     QTimer *timer = new QTimer(this);
     QTimer *programTimer = new QTimer(this);
-    //QTimer *menuTimer = new QTimer(this);
-    QElapsedTimer menuTimer;
+    int updateMenuCounter = 0;
     ~MainWindow();
 
 public slots:
@@ -53,8 +51,6 @@ private slots:
     void updateCaption();
 
     void updateProgramTimer();
-
-    void updateMenuTimer();
 
     void power_on();
 

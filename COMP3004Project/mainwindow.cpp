@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
     connect(programTimer, SIGNAL(timeout()), this, SLOT(updateProgramTimer()));
-    //connect(menuTimer, SIGNAL(timeout()), this, SLOT(updateMenuTimer()));
     power_off();
     //to be used for the battery class
 
@@ -77,13 +76,14 @@ void MainWindow::updateCaption(){
 }
 
 void MainWindow::updateProgramTimer(){
-    //int++;
+    updateMenuCounter++;//should be number of seconds
+    if (updateMenuCounter >= 5){
+        ui->rightButton->setEnabled(true);
+        programTimer->stop();
+    }
+
     //some sort of int -> 00:00 converter to display to screen
     //something->setText(QString::number(the 00:00 variable)
-}
-
-void MainWindow::updateMenuTimer(){
-    //if (
 }
 
 MainWindow::~MainWindow()
@@ -168,30 +168,10 @@ void MainWindow::selectMenuHandler(QString s)
         //}
     }
     else if (s == "Pain"){
-        //programTimer->start(1000); // this will start the timer running every second
+        updateMenuCounter = 0;
+        programTimer->start(1000); // this will start the timer running every second
+        ui->rightButton->setEnabled(false);
         //UPDATING THE SCREEN MUST HAPPEN IN THE updateProgramTimer METHOD
-        int count = 1;
-        double time_counter = 0;
-        clock_t this_time = clock();
-        clock_t last_time = this_time;
-
-        while(true)
-        {
-            this_time = clock();
-
-            time_counter += (double)(this_time - last_time);
-
-            last_time = this_time;
-
-            if(time_counter > (double)(100 * CLOCKS_PER_SEC))
-            {
-                time_counter -= (double)(100 * CLOCKS_PER_SEC);
-                printf("%d\n", count);
-                count++;
-            }
-
-            printf("DebugTime = %f\n", time_counter);
-        }
     }
     else if (s == "CBT"){
 
@@ -204,23 +184,7 @@ void MainWindow::selectMenuHandler(QString s)
     }
     else if (s == "20 Hz"){
 
-    }/*
-            QElapsedTimer timer;
-               timer.start();
-               slowOperation1();
-
-               int remainingTime = timeout - timer.elapsed();
-               if (remainingTime > 0)
-                   slowOperation2(remainingTime);
-                           */
-    /*
-    menuTimer.start();
-    ui->rightButton->setEnabled(false);
-    while(menuTimer.elapsed() < 5000){
-
     }
-    ui->rightButton->setEnabled(true);
-    */
 }
 
 void MainWindow::backMenuHandler(QString s)
