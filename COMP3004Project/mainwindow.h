@@ -8,6 +8,8 @@
 #include <battery.h>
 #include <qtimer.h>
 #include <powerlevel.h>
+#include <qelapsedtimer.h>
+#include <time.h>
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +26,8 @@ public:
     bool electrodesConnected = false;
     PowerLevel power;
     QTimer *timer = new QTimer(this);
+    //QTimer *menuTimer = new QTimer(this);
+    QElapsedTimer menuTimer;
     ~MainWindow();
 
 public slots:
@@ -46,6 +50,8 @@ private slots:
     void on_backButton_clicked();
 
     void updateCaption();
+
+    void updateMenuTimer();
 
     void power_on();
 
