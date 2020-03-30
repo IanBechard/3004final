@@ -143,6 +143,32 @@ void MainWindow::selectMenuHandler(QString s)
         //setheader to "SettingsS"
         on_downButton_clicked();
     }
+    else if (s == "Allergy"){//<--- Works
+        //go into new menu???
+        //getTime on menu object
+        //start timer
+        //sent drain rate
+        //while loop{
+        //  if electrodes off
+        //  pause timer
+        //  revert drain rate(not pause)
+        //}
+    }
+    else if (s == "Pain"){
+
+    }
+    else if (s == "CBT"){
+
+    }
+    else if (s == "1.0-9.9 Hz"){
+
+    }
+    else if (s == "10 Hz"){
+
+    }
+    else if (s == "20 Hz"){
+
+    }
 }
 
 void MainWindow::backMenuHandler(QString s)
