@@ -15,6 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUG REPORT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//1)    Not having electrodes connected will pause battery drain
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 //runs every second
 
 void MainWindow::power_on(){
@@ -27,7 +32,7 @@ void MainWindow::power_on(){
     power.setPower(0);
     electrodesConnected = false;
     ui->batteryTag->setText(QString::number(b.getPercentage()));
-    timer->start(5000);
+    timer->start(15);
 }
 
 void MainWindow::power_off(){
@@ -137,6 +142,32 @@ void MainWindow::selectMenuHandler(QString s)
         ui->menuLabel->setText("Settings");
         //setheader to "SettingsS"
         on_downButton_clicked();
+    }
+    else if (s == "Allergy"){//<--- Works
+        //go into new menu???
+        //getTime on menu object
+        //start timer
+        //sent drain rate
+        //while loop{
+        //  if electrodes off
+        //  pause timer
+        //  revert drain rate(not pause)
+        //}
+    }
+    else if (s == "Pain"){
+
+    }
+    else if (s == "CBT"){
+
+    }
+    else if (s == "1.0-9.9 Hz"){
+
+    }
+    else if (s == "10 Hz"){
+
+    }
+    else if (s == "20 Hz"){
+
     }
 }
 

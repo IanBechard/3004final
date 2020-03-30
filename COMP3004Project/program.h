@@ -6,12 +6,13 @@
 class program
 {
 public:
-    program(QString n);
+    program(QString n, int t);
     QString getName();
+    int getTime();
 
 private:
     QString name;
-    //Timeobject time;
+    int time;
 };
 
 #endif // PROGRAM_H
