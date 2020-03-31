@@ -16,11 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUG REPORT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//1)    None, GJ guys!
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 //runs every second
 
 void MainWindow::power_on(){
@@ -33,7 +28,8 @@ void MainWindow::power_on(){
     power.setPower(0);
     electrodesConnected = false;
     ui->batteryTag->setText(QString::number(b.getPercentage()));
-    timer->start(100);
+    ui->treatmentTag->setText("00:00");
+    timer->start(100);//"tick" rate for battery
 }
 
 void MainWindow::power_off(){
@@ -41,6 +37,7 @@ void MainWindow::power_off(){
     toggleButtons();
 
     ui->batteryTag->clear();
+    ui->treatmentTag->clear();
     ui->listWidget->clear();
     ui->menuLabel->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
