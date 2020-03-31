@@ -76,14 +76,12 @@ void MainWindow::updateCaption(){
 void MainWindow::updateProgramTimer(){
 
     if(menu == "Frequencies"){
-        if (updateMenuCounter >= freqMenu.getFrequencies()[menuType].getTime()){                                            //if the treatment has reached its end
-            programTimer->stop();
-        }
-        else if (electrodesConnected == true && updateMenuCounter <= freqMenu.getFrequencies()[menuType].getTime()){       //if electrodes are on...
+
+        if (electrodesConnected == true){       //if electrodes are on...
             updateMenuCounter++;
         }
 
-        test = timerFormat(freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter);
+        test = timerFormat(updateMenuCounter);
     }
     else{//menu == "Programs"
         if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){                                            //if the treatment has reached its end
@@ -202,7 +200,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Frequencies";
-        ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
+        //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -210,7 +208,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Frequencies";
-        ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
+        //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -218,7 +216,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Frequencies";
-        ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
+        //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -300,7 +298,10 @@ void MainWindow::on_rightButton_clicked()
 QString MainWindow::timerFormat(int time){
     QString theString = "";
 
-    if((time) <= 9){
+    if(time >= 60){
+        theString = QString("0%1:%2%3").arg(time/60).arg((time%60)/10).arg((time%60)%10);
+    }
+    else if(time <= 9){
         theString = QString("00:0%1").arg(time);
     }
     else {
