@@ -27,7 +27,8 @@ public:
     QTimer *timer = new QTimer(this);
     QTimer *programTimer = new QTimer(this);
     int updateMenuCounter = 0;
-    QString menuType;
+    int menuType = 100;
+    QString menu = "";
     ~MainWindow();
 
 public slots:

@@ -33,7 +33,7 @@ void MainWindow::power_on(){
     power.setPower(0);
     electrodesConnected = false;
     ui->batteryTag->setText(QString::number(b.getPercentage()));
-    timer->start(15);
+    timer->start(100);
 }
 
 void MainWindow::power_off(){
@@ -78,14 +78,28 @@ void MainWindow::updateCaption(){
 void MainWindow::updateProgramTimer(){//ui->rightButton->setEnabled(true);//testing only
     //updateMenuCounter++;//should be number of seconds
 
-    if (updateMenuCounter >= 5){//menuType.getTime()                 //if the treatment has reached its end
+
+
+    if (updateMenuCounter >= freqMenu.getFrequencies()[menuType].getTime()){//if the treatment has reached its end
         ui->rightButton->setEnabled(true);
         programTimer->stop();
     }
-    else if (electrodesConnected == false && updateMenuCounter <= 5){//if electrodes are off...
+    else if (electrodesConnected == false && updateMenuCounter <= freqMenu.getFrequencies()[menuType].getTime()){       //if electrodes are off...
         ui->leftButton->setEnabled(false);
     }
-    else{                                                            //if electrodes are on && treatment is not over
+    else{                                                                   //if electrodes are on && treatment is not over
+        updateMenuCounter++;
+        ui->leftButton->setEnabled(true);
+    }
+
+    if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){//if the treatment has reached its end
+        ui->rightButton->setEnabled(true);
+        programTimer->stop();
+    }
+    else if (electrodesConnected == false && updateMenuCounter <= progsMenu.getPrograms()[menuType].getTime()){       //if electrodes are off...
+        ui->leftButton->setEnabled(false);
+    }
+    else{                                                                   //if electrodes are on && treatment is not over
         updateMenuCounter++;
         ui->leftButton->setEnabled(true);
     }
@@ -165,27 +179,55 @@ void MainWindow::selectMenuHandler(QString s)
         //setheader to "SettingsS"
         on_downButton_clicked();
     }
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "Allergy"){
+        updateMenuCounter = 0;
+        menuType = 0;
+        menu = "Programs";
+        ui->rightButton->setEnabled(false);
+        programTimer->start(1000);
 
     }
     else if (s == "Pain"){
         updateMenuCounter = 0;
-        menuType = "Pain";
-        ui->rightButton->setEnabled(false); //testing only
-        programTimer->start(1000); // this will start the timer running every second
+        menuType = 1;
+        menu = "Programs";
+        ui->rightButton->setEnabled(false);
+        programTimer->start(1000);
 
         //UPDATING THE SCREEN MUST HAPPEN IN THE updateProgramTimer METHOD
     }
     else if (s == "CBT"){
+        updateMenuCounter = 0;
+        menuType = 2;
+        menu = "Programs";
+        ui->rightButton->setEnabled(false);
+        programTimer->start(1000);
 
     }
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "1.0-9.9 Hz"){
+        updateMenuCounter = 0;
+        menuType = 0;
+        menu = "Frequencies";
+        ui->rightButton->setEnabled(false);
+        programTimer->start(1000);
 
     }
     else if (s == "10 Hz"){
+        updateMenuCounter = 0;
+        menuType = 1;
+        menu = "Frequencies";
+        ui->rightButton->setEnabled(false);
+        programTimer->start(1000);
 
     }
     else if (s == "20 Hz"){
+        updateMenuCounter = 0;
+        menuType = 2;
+        menu = "Frequencies";
+        ui->rightButton->setEnabled(false);
+        programTimer->start(1000);
 
     }
 }
