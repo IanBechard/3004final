@@ -29,6 +29,7 @@ public:
     int updateMenuCounter = 0;
     int menuType = 100;
     QString menu = "";
+    QString test = "";
     ~MainWindow();
 
 public slots:

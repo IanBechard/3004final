@@ -39,6 +39,7 @@ void MainWindow::power_on(){
 void MainWindow::power_off(){
     powerOn=false;
     toggleButtons();
+
     ui->batteryTag->clear();
     ui->listWidget->clear();
     ui->menuLabel->clear();
@@ -75,38 +76,41 @@ void MainWindow::updateCaption(){
     }
 }
 
-void MainWindow::updateProgramTimer(){//ui->rightButton->setEnabled(true);//testing only
-    //updateMenuCounter++;//should be number of seconds
+void MainWindow::updateProgramTimer(){
 
+    if(menu == "Frequencies"){
+        if (updateMenuCounter >= freqMenu.getFrequencies()[menuType].getTime()){                                            //if the treatment has reached its end
+            programTimer->stop();
+        }
+        else if (electrodesConnected == true && updateMenuCounter <= freqMenu.getFrequencies()[menuType].getTime()){       //if electrodes are on...
+            updateMenuCounter++;
+        }
 
+        if((freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter) <= 9){
+            test = QString("00:0%1").arg(freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter);
+        }
+        else {
+            test = QString("00:%1").arg(freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter);
+        }
+    }
+    else{//menu == "Programs"
+        if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){                                            //if the treatment has reached its end
+            programTimer->stop();
+        }
+        else if (electrodesConnected == true && updateMenuCounter <= progsMenu.getPrograms()[menuType].getTime()){       //if electrodes are on...
+            updateMenuCounter++;
+        }
 
-    if (updateMenuCounter >= freqMenu.getFrequencies()[menuType].getTime()){//if the treatment has reached its end
-        ui->rightButton->setEnabled(true);
-        programTimer->stop();
-    }
-    else if (electrodesConnected == false && updateMenuCounter <= freqMenu.getFrequencies()[menuType].getTime()){       //if electrodes are off...
-        ui->leftButton->setEnabled(false);
-    }
-    else{                                                                   //if electrodes are on && treatment is not over
-        updateMenuCounter++;
-        ui->leftButton->setEnabled(true);
-    }
-
-    if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){//if the treatment has reached its end
-        ui->rightButton->setEnabled(true);
-        programTimer->stop();
-    }
-    else if (electrodesConnected == false && updateMenuCounter <= progsMenu.getPrograms()[menuType].getTime()){       //if electrodes are off...
-        ui->leftButton->setEnabled(false);
-    }
-    else{                                                                   //if electrodes are on && treatment is not over
-        updateMenuCounter++;
-        ui->leftButton->setEnabled(true);
+        if((progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter) <= 9){
+            test = QString("00:0%1").arg(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
+        }
+        else {
+            test = QString("00:%1").arg(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
+        }
     }
 
+    ui->treatmentTag->setText(test);
 
-    //some sort of int -> 00:00 converter to display to screen
-    //something->setText(QString::number(the 00:00 variable)
 }
 
 MainWindow::~MainWindow()
@@ -184,7 +188,6 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Programs";
-        ui->rightButton->setEnabled(false);
         programTimer->start(1000);
 
     }
@@ -192,16 +195,13 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Programs";
-        ui->rightButton->setEnabled(false);
         programTimer->start(1000);
 
-        //UPDATING THE SCREEN MUST HAPPEN IN THE updateProgramTimer METHOD
     }
     else if (s == "CBT"){
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Programs";
-        ui->rightButton->setEnabled(false);
         programTimer->start(1000);
 
     }
@@ -210,7 +210,6 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Frequencies";
-        ui->rightButton->setEnabled(false);
         programTimer->start(1000);
 
     }
@@ -218,7 +217,6 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Frequencies";
-        ui->rightButton->setEnabled(false);
         programTimer->start(1000);
 
     }
@@ -226,7 +224,6 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Frequencies";
-        ui->rightButton->setEnabled(false);
         programTimer->start(1000);
 
     }
