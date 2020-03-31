@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <cmath>
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -29,7 +29,7 @@ void MainWindow::power_on(){
     electrodesConnected = false;
     ui->batteryTag->setText(QString::number(b.getPercentage()));
     ui->treatmentTag->setText("00:00");
-    timer->start(100);//"tick" rate for battery
+    timer->start(5000);//"tick" rate for battery
 }
 
 void MainWindow::power_off(){
@@ -68,7 +68,7 @@ void MainWindow::toggleButtons(){
 
 void MainWindow::updateCaption(){
     b.degenerate();
-    ui->batteryTag->setText(QString::number(b.getPercentage()));
+    ui->batteryTag->setText(QString::number(round(b.getPercentage())));
     if (b.getPercentage() <= 0){
         power_off();
     }
