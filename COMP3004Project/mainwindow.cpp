@@ -42,6 +42,7 @@ void MainWindow::power_off(){
     ui->menuLabel->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
     timer->stop();
+    programTimer->stop();
 }
 
 void MainWindow::toggleButtons(){
