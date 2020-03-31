@@ -83,12 +83,7 @@ void MainWindow::updateProgramTimer(){
             updateMenuCounter++;
         }
 
-        if((freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter) <= 9){
-            test = QString("00:0%1").arg(freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter);
-        }
-        else {
-            test = QString("00:%1").arg(freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter);
-        }
+        test = timerFormat(freqMenu.getFrequencies()[menuType].getTime()-updateMenuCounter);
     }
     else{//menu == "Programs"
         if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){                                            //if the treatment has reached its end
@@ -98,12 +93,7 @@ void MainWindow::updateProgramTimer(){
             updateMenuCounter++;
         }
 
-        if((progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter) <= 9){
-            test = QString("00:0%1").arg(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
-        }
-        else {
-            test = QString("00:%1").arg(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
-        }
+        test = timerFormat(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
     }
 
     ui->treatmentTag->setText(test);
@@ -133,6 +123,8 @@ void MainWindow::on_selectButton_clicked()
 void MainWindow::on_backButton_clicked()
 {
     backMenuHandler(ui->listWidget->currentItem()->text());
+    programTimer->stop();
+    ui->treatmentTag->setText("00:00");
 }
 
 
@@ -185,6 +177,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Programs";
+        ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -192,6 +185,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Programs";
+        ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -199,6 +193,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Programs";
+        ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -207,6 +202,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Frequencies";
+        ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -214,6 +210,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Frequencies";
+        ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -221,6 +218,7 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Frequencies";
+        ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -297,4 +295,17 @@ void MainWindow::on_rightButton_clicked()
     if (electrodesConnected){
         b.setDegen(power.getPower());
     }
+}
+
+QString MainWindow::timerFormat(int time){
+    QString theString = "";
+
+    if((time) <= 9){
+        theString = QString("00:0%1").arg(time);
+    }
+    else {
+        theString = QString("00:%1").arg(time);
+    }
+
+    return theString;
 }

@@ -69,6 +69,8 @@ private slots:
 
     void on_rightButton_clicked();
 
+    QString timerFormat(int time);
+
 private:
     Ui::MainWindow *ui;
     frequencyMenu freqMenu;
