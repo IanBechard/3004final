@@ -4,7 +4,7 @@ programsMenu::programsMenu()
 {
     program a = * new program("Allergy", 10);
     program b = * new program("Pain", 15);
-    program c = * new program("CBT", 20);
+    program c = * new program("Bloating", 20);
     programs = {a, b, c};
 }
 

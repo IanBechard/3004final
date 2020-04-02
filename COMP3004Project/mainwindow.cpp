@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //runs every second
 
 void MainWindow::power_on(){
+    power.setPower(0);
     flag=false;
     powerOn=true;
     toggleButtons();
@@ -59,6 +60,7 @@ void MainWindow::toggleButtons(){
     ui->leftButton->setEnabled(true);
     ui->rightButton->setEnabled(true);
     ui->selectButton->setEnabled(true);
+    ui->homeButton->setEnabled(true);
     }
     else{
         ui->backButton->setEnabled(false);
@@ -68,6 +70,7 @@ void MainWindow::toggleButtons(){
         ui->leftButton->setEnabled(false);
         ui->rightButton->setEnabled(false);
         ui->selectButton->setEnabled(false);
+        ui->homeButton->setEnabled(false);
     }
 }
 
@@ -128,6 +131,19 @@ void MainWindow::on_trodeButton_clicked()
     }
 }
 
+void MainWindow::on_homeButton_clicked(){
+    programTimer->stop();
+    power.setPower(0);
+    flag=false;
+    ui->timeLabel->clear();
+    ui->count->clear();
+    ui->powerLabel->clear();
+    ui->power->clear();
+    setMainMenu();
+    ui->menuLabel->setText("Main Menu");
+    //set header to main menu
+    on_downButton_clicked();
+}
 
 void MainWindow::on_upButton_clicked()
 {
@@ -193,18 +209,23 @@ void MainWindow::selectMenuHandler(QString s)
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "Allergy"){
+        flag = true;
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Programs";
         programTime->setHMS(0,0,(progsMenu.getPrograms()[menuType].getTime()));
         ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         ui->listWidget->clear();
+        // Initialize labels and QTimer
         ui->timeLabel->setText("Time remaining: ");
-        ui->count->setText(programTime->toString("m:ss"));
+        ui->powerLabel->setText("Power: ");
+        ui->power->setText("0");
+        ui->count->setText(programTime->toString("mm:ss"));
         programTimer->start(1000);
 
     }
     else if (s == "Pain"){
+        flag = true;
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Programs";
@@ -212,11 +233,14 @@ void MainWindow::selectMenuHandler(QString s)
         ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         ui->listWidget->clear();
         ui->timeLabel->setText("Time remaining: ");
-        ui->count->setText(programTime->toString("m:ss"));
+        ui->powerLabel->setText("Power: ");
+        ui->power->setText("0");
+        ui->count->setText(programTime->toString("mm:ss"));
         programTimer->start(1000);
 
     }
-    else if (s == "CBT"){
+    else if (s == "Bloating"){
+        flag = true;
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Programs";
@@ -224,7 +248,9 @@ void MainWindow::selectMenuHandler(QString s)
         ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         ui->listWidget->clear();
         ui->timeLabel->setText("Time remaining: ");
-        ui->count->setText(programTime->toString("m:ss"));
+        ui->powerLabel->setText("Power: ");
+        ui->power->setText("0");
+        ui->count->setText(programTime->toString("mm:ss"));
         programTimer->start(1000);
 
     }
@@ -354,23 +380,23 @@ void MainWindow::on_electrodesConnected_clicked()
 
 void MainWindow::on_leftButton_clicked()
 {
+    if (flag == true) {
     power.decreasePower();
     if (electrodesConnected){
         b.setDegen(power.getPower());
     }
     // If in frequency menu, change label
-    if (flag == true) {
-        ui->power->setText(QString::number(power.getPower()));
+    ui->power->setText(QString::number(power.getPower()));
     }
 }
 void MainWindow::on_rightButton_clicked()
 {
+    if (flag == true) {
     power.increasePower();
     if (electrodesConnected){
         b.setDegen(power.getPower());
     }
-    if (flag == true) {
-        ui->power->setText(QString::number(power.getPower()));
+    ui->power->setText(QString::number(power.getPower()));
     }
 }
 

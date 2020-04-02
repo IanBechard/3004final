@@ -48,6 +48,8 @@ private slots:
 
     void on_selectButton_clicked();
 
+    void on_homeButton_clicked();
+
     void selectMenuHandler(QString s);
 
     void backMenuHandler(QString s);
