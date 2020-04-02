@@ -1,9 +1,8 @@
 #include "frequency.h"
 
-frequency::frequency(QString n, int t)
+frequency::frequency(QString n)
 {
     name = n;
-    time = t;
 }
 
 QString frequency::getName()
@@ -16,11 +15,3 @@ void frequency::setName(QString s)
     name = s;
 }
 
-int frequency::getTime(){
-    return time;
-}
-
-void frequency::setTime(int t)
-{
-    time = t;
-}

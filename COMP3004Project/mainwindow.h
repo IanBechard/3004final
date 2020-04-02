@@ -32,7 +32,7 @@ public:
     int updateMenuCounter = 0;
     int menuType = 100;
     QString menu = "";
-    QString test = "";
+    QString timerText = "";
     ~MainWindow();
 
 public slots:

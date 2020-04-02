@@ -34,7 +34,6 @@ void MainWindow::power_on(){
     power.setPower(0);
     electrodesConnected = false;
     ui->batteryTag->setText(QString::number(b.getPercentage()));
-    ui->treatmentTag->setText("00:00");
     timer->start(5000);//"tick" rate for battery
 }
 
@@ -43,7 +42,6 @@ void MainWindow::power_off(){
     toggleButtons();
 
     ui->batteryTag->clear();
-    ui->treatmentTag->clear();
     ui->listWidget->clear();
     ui->menuLabel->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
@@ -85,14 +83,12 @@ void MainWindow::updateCaption(){
 void MainWindow::updateProgramTimer(){
 
     if(menu == "Frequencies"){
-
-
          if (electrodesConnected == true){       //if electrodes are on...
             updateMenuCounter++;
             programTime->addSecs(1);
 
         }
-        test = timerFormat(updateMenuCounter);
+        timerText = timerFormat(updateMenuCounter);
     }
     else{//menu == "Programs"
         if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){                                            //if the treatment has reached its end
@@ -103,16 +99,15 @@ void MainWindow::updateProgramTimer(){
             programTime->addSecs(-1);
         }
 
-        test = timerFormat(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
+        timerText = timerFormat(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
     }
 
-    ui->count->setText(test);
-
+    ui->count->setText(timerText);
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui; //uh oh, stinky
+    delete ui;
 }
 
 void MainWindow::on_downButton_clicked()
@@ -140,8 +135,7 @@ void MainWindow::on_homeButton_clicked(){
     ui->powerLabel->clear();
     ui->power->clear();
     setMainMenu();
-    ui->menuLabel->setText("Main Menu");
-    //set header to main menu
+    ui->menuLabel->setText("Main Menu");//set header to main menu
     on_downButton_clicked();
 }
 
@@ -159,7 +153,6 @@ void MainWindow::on_backButton_clicked()
 {
     backMenuHandler(ui->listWidget->currentItem()->text());
     programTimer->stop();
-    ui->treatmentTag->setText("00:00");
 }
 
 
@@ -214,7 +207,6 @@ void MainWindow::selectMenuHandler(QString s)
         menuType = 0;
         menu = "Programs";
         programTime->setHMS(0,0,(progsMenu.getPrograms()[menuType].getTime()));
-        ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         ui->listWidget->clear();
         // Initialize labels and QTimer
         ui->timeLabel->setText("Time remaining: ");
@@ -230,7 +222,6 @@ void MainWindow::selectMenuHandler(QString s)
         menuType = 1;
         menu = "Programs";
         programTime->setHMS(0,0,(progsMenu.getPrograms()[menuType].getTime()));
-        ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         ui->listWidget->clear();
         ui->timeLabel->setText("Time remaining: ");
         ui->powerLabel->setText("Power: ");
@@ -245,7 +236,6 @@ void MainWindow::selectMenuHandler(QString s)
         menuType = 2;
         menu = "Programs";
         programTime->setHMS(0,0,(progsMenu.getPrograms()[menuType].getTime()));
-        ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
         ui->listWidget->clear();
         ui->timeLabel->setText("Time remaining: ");
         ui->powerLabel->setText("Power: ");
@@ -266,7 +256,6 @@ void MainWindow::selectMenuHandler(QString s)
         ui->powerLabel->setText("Power: ");
         ui->power->setText("0");
         ui->count->setText(programTime->toString("mm:ss"));
-        //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -281,7 +270,6 @@ void MainWindow::selectMenuHandler(QString s)
         ui->powerLabel->setText("Power: ");
         ui->power->setText("0");
         ui->count->setText(programTime->toString("mm:ss"));
-        //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -296,7 +284,6 @@ void MainWindow::selectMenuHandler(QString s)
         ui->powerLabel->setText("Power: ");
         ui->power->setText("0");
         ui->count->setText(programTime->toString("mm:ss"));
-        //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
@@ -399,6 +386,8 @@ void MainWindow::on_rightButton_clicked()
     ui->power->setText(QString::number(power.getPower()));
     }
 }
+
+//
 
 QString MainWindow::timerFormat(int time){
     QString theString = "";
