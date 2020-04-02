@@ -7,6 +7,7 @@
 #include <settingsmenu.h>
 #include <battery.h>
 #include <qtimer.h>
+#include <QTime>
 #include <powerlevel.h>
 
 
@@ -21,11 +22,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     Battery b;
+    bool flag;          // To debug the left/right buttons
     bool powerOn = false;
     bool electrodesConnected = false;
     PowerLevel power;
     QTimer *timer = new QTimer(this);
     QTimer *programTimer = new QTimer(this);
+    QTime *programTime = new QTime(0,0,0);
     int updateMenuCounter = 0;
     int menuType = 100;
     QString menu = "";
@@ -50,6 +53,8 @@ private slots:
     void backMenuHandler(QString s);
 
     void on_backButton_clicked();
+
+    void on_trodeButton_clicked();
 
     void updateCaption();
 

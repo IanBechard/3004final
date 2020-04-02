@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <cmath>
 using namespace std;
@@ -19,8 +19,13 @@ MainWindow::MainWindow(QWidget *parent) :
 //runs every second
 
 void MainWindow::power_on(){
+    flag=false;
     powerOn=true;
     toggleButtons();
+    ui->timeLabel->clear();
+    ui->count->clear();
+    ui->powerLabel->clear();
+    ui->power->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: white;}""");
     setMainMenu();
     ui->menuLabel->setText("Main Menu");
@@ -48,7 +53,7 @@ void MainWindow::power_off(){
 void MainWindow::toggleButtons(){
     if (powerOn){
     ui->backButton->setEnabled(true);
-    ui->burgerButton->setEnabled(true);
+    ui->trodeButton->setEnabled(true);
     ui->upButton->setEnabled(true);
     ui->downButton->setEnabled(true);
     ui->leftButton->setEnabled(true);
@@ -57,7 +62,7 @@ void MainWindow::toggleButtons(){
     }
     else{
         ui->backButton->setEnabled(false);
-        ui->burgerButton->setEnabled(false);
+        ui->trodeButton->setEnabled(false);
         ui->upButton->setEnabled(false);
         ui->downButton->setEnabled(false);
         ui->leftButton->setEnabled(false);
@@ -78,24 +83,27 @@ void MainWindow::updateProgramTimer(){
 
     if(menu == "Frequencies"){
 
-        if (electrodesConnected == true){       //if electrodes are on...
-            updateMenuCounter++;
-        }
 
+         if (electrodesConnected == true){       //if electrodes are on...
+            updateMenuCounter++;
+            programTime->addSecs(1);
+
+        }
         test = timerFormat(updateMenuCounter);
     }
     else{//menu == "Programs"
         if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){                                            //if the treatment has reached its end
             programTimer->stop();
         }
-        else if (electrodesConnected == true && updateMenuCounter <= progsMenu.getPrograms()[menuType].getTime()){       //if electrodes are on...
+        else if ((electrodesConnected) == (true && updateMenuCounter <= progsMenu.getPrograms()[menuType].getTime())){       //if electrodes are on...
             updateMenuCounter++;
+            programTime->addSecs(-1);
         }
 
         test = timerFormat(progsMenu.getPrograms()[menuType].getTime()-updateMenuCounter);
     }
 
-    ui->treatmentTag->setText(test);
+    ui->count->setText(test);
 
 }
 
@@ -108,6 +116,18 @@ void MainWindow::on_downButton_clicked()
 {
     ui->listWidget->setCurrentRow(validSelection(ui->listWidget->currentRow() + 1, ui->listWidget->count()));
 }
+
+void MainWindow::on_trodeButton_clicked()
+{
+    if (electrodesConnected == false)
+    {
+        electrodesConnected = true;
+    }
+    else {
+     electrodesConnected = false;
+    }
+}
+
 
 void MainWindow::on_upButton_clicked()
 {
@@ -176,7 +196,11 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Programs";
+        programTime->setHMS(0,0,(progsMenu.getPrograms()[menuType].getTime()));
         ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
+        ui->listWidget->clear();
+        ui->timeLabel->setText("Time remaining: ");
+        ui->count->setText(programTime->toString("m:ss"));
         programTimer->start(1000);
 
     }
@@ -184,7 +208,11 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Programs";
+        programTime->setHMS(0,0,(progsMenu.getPrograms()[menuType].getTime()));
         ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
+        ui->listWidget->clear();
+        ui->timeLabel->setText("Time remaining: ");
+        ui->count->setText(programTime->toString("m:ss"));
         programTimer->start(1000);
 
     }
@@ -192,31 +220,56 @@ void MainWindow::selectMenuHandler(QString s)
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Programs";
+        programTime->setHMS(0,0,(progsMenu.getPrograms()[menuType].getTime()));
         ui->treatmentTag->setText(timerFormat(progsMenu.getPrograms()[menuType].getTime()));
+        ui->listWidget->clear();
+        ui->timeLabel->setText("Time remaining: ");
+        ui->count->setText(programTime->toString("m:ss"));
         programTimer->start(1000);
 
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "1.0-9.9 Hz"){
+        flag = true;
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Frequencies";
+        programTime->setHMS(0,0,0);
+        ui->listWidget->clear();
+        ui->timeLabel->setText("Time: ");
+        ui->powerLabel->setText("Power: ");
+        ui->power->setText("0");
+        ui->count->setText(programTime->toString("mm:ss"));
         //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
     else if (s == "10 Hz"){
+        flag = true;
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Frequencies";
+        programTime->setHMS(0,0,0);
+        ui->listWidget->clear();
+        ui->timeLabel->setText("Time: ");
+        ui->powerLabel->setText("Power: ");
+        ui->power->setText("0");
+        ui->count->setText(programTime->toString("mm:ss"));
         //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
     }
     else if (s == "20 Hz"){
+        flag = true;
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Frequencies";
+        programTime->setHMS(0,0,0);
+        ui->listWidget->clear();
+        ui->timeLabel->setText("Time: ");
+        ui->powerLabel->setText("Power: ");
+        ui->power->setText("0");
+        ui->count->setText(programTime->toString("mm:ss"));
         //ui->treatmentTag->setText(timerFormat(freqMenu.getFrequencies()[menuType].getTime()));
         programTimer->start(1000);
 
@@ -236,10 +289,28 @@ void MainWindow::backMenuHandler(QString s)
         //set header to main menu
         on_downButton_clicked();
     }
-    else if(true/*in frequencies or programs*/)
+    else if(s == "1.0-9.9 Hz" || s == "10 Hz" || s == "20 Hz")
     {
-        ;
-        //back out to programs or frequencies
+        programTimer->stop();
+        updateList(progsMenu.getProgramsNames());
+        ui->menuLabel->setText("Program");
+        //setheader to "Programs"
+        on_downButton_clicked();
+
+        /* THINGS TO DO WHEN HEADED BACK TO PROGRAMS/FREQUENCIES
+            ui->timeLabel->clear();
+            ui->count->clear();
+            ui->powerLabel->clear();
+            ui->power->clear();
+            flag = false;
+        */
+    }
+    else {
+        programTimer->stop();
+        updateList(freqMenu.getFrequenciesNames());
+        ui->menuLabel->setText("Frequency");
+        //setheader to "Frequencies"
+        on_downButton_clicked();
     }
 
 }
@@ -287,12 +358,19 @@ void MainWindow::on_leftButton_clicked()
     if (electrodesConnected){
         b.setDegen(power.getPower());
     }
+    // If in frequency menu, change label
+    if (flag == true) {
+        ui->power->setText(QString::number(power.getPower()));
+    }
 }
 void MainWindow::on_rightButton_clicked()
 {
     power.increasePower();
     if (electrodesConnected){
         b.setDegen(power.getPower());
+    }
+    if (flag == true) {
+        ui->power->setText(QString::number(power.getPower()));
     }
 }
 

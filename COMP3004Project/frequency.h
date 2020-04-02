@@ -8,7 +8,9 @@ class frequency
 public:
     frequency(QString n, int t);
     QString getName();
+    void setName(QString s);
     int getTime();
+    void setTime(int t);
 
 private:
     QString name;
