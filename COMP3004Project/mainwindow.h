@@ -70,8 +70,6 @@ private slots:
 
     void on_powerButton_clicked();
 
-    void on_electrodesConnected_clicked();
-
     void on_leftButton_clicked();
 
     void on_rightButton_clicked();

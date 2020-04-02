@@ -33,7 +33,7 @@ void MainWindow::power_on(){
     on_downButton_clicked();
     power.setPower(0);
     electrodesConnected = false;
-    ui->batteryTag->setText(QString::number(b.getPercentage()));
+    ui->batteryTag->setText(QString::number(round(b.getPercentage())));
     timer->start(5000);//"tick" rate for battery
 }
 
@@ -117,12 +117,19 @@ void MainWindow::on_downButton_clicked()
 
 void MainWindow::on_trodeButton_clicked()
 {
-    if (electrodesConnected == false)
-    {
-        electrodesConnected = true;
+    if (electrodesConnected){
+        electrodesConnected = false;
+        b.setDegen(1);
     }
-    else {
-     electrodesConnected = false;
+    else{
+        electrodesConnected = true;
+        if (power.getPower() == 0){
+            b.setDegen(1);
+        }
+        else{
+        b.setDegen(power.getPower());
+        }
+
     }
 }
 
@@ -346,24 +353,6 @@ void MainWindow::on_powerButton_clicked()
     }
 }
 
-void MainWindow::on_electrodesConnected_clicked()
-{
-    if (electrodesConnected){
-        electrodesConnected = false;
-        b.setDegen(1);
-    }
-    else{
-        electrodesConnected = true;
-        if (power.getPower() == 0){
-            b.setDegen(1);
-        }
-        else{
-        b.setDegen(power.getPower());
-        }
-
-    }
-
-}
 
 void MainWindow::on_leftButton_clicked()
 {
