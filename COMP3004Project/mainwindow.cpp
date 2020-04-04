@@ -22,6 +22,7 @@ void MainWindow::power_on(){
     menu = "";
     batteryBeep();
     power.setPower(0);
+
     flag=false;
     powerOn=true;
     toggleButtons();
@@ -52,9 +53,8 @@ void MainWindow::power_off(){
 }
 
 void MainWindow::batteryBeep(){
-    if (b.getPercentage() <= 10) {
-        // Send signal to speaker, make a beep
-    }
+        ui->batteryTag->setText("LOW BATTERY");
+
 
 }
 
@@ -86,6 +86,10 @@ void MainWindow::updateCaption(){
     ui->batteryTag->setText(QString::number(round(b.getPercentage())));
     if (b.getPercentage() <= 0){
         power_off();
+    }
+    if (b.getPercentage() < 10 && lowBatteryTriggered == false){
+        batteryBeep();
+        lowBatteryTriggered = true;
     }
 }
 

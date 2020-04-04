@@ -160,14 +160,17 @@
    <widget class="QLabel" name="batteryTag">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>200</x>
       <y>0</y>
-      <width>64</width>
+      <width>101</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
      <string>100</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="menuLabel">

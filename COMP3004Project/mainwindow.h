@@ -33,6 +33,7 @@ public:
     int menuType = 100;
     QString menu = "";
     QString timerText = "";
+    bool lowBatteryTriggered = false;
     ~MainWindow();
 
 public slots:
