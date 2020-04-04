@@ -23,7 +23,7 @@ void MainWindow::power_on(){
     batteryBeep();
     power.setPower(0);
 
-    flag=false;
+    inTreatment=false;
     powerOn=true;
     toggleButtons();
     ui->timeLabel->clear();
@@ -150,7 +150,7 @@ void MainWindow::on_homeButton_clicked(){
     menu = "";
     programTimer->stop();
     power.setPower(0);
-    flag=false;
+    inTreatment=false;
     ui->timeLabel->clear();
     ui->count->clear();
     ui->powerLabel->clear();
@@ -227,7 +227,7 @@ void MainWindow::selectMenuHandler(QString s)
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "Allergy"){
-        flag = true;
+        inTreatment = true;
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Programs";
@@ -242,7 +242,7 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "Pain"){
-        flag = true;
+        inTreatment = true;
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Programs";
@@ -256,7 +256,7 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "Bloating"){
-        flag = true;
+        inTreatment = true;
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Programs";
@@ -271,7 +271,7 @@ void MainWindow::selectMenuHandler(QString s)
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "1.0-9.9 Hz"){
-        flag = true;
+        inTreatment = true;
         updateMenuCounter = 0;
         menuType = 0;
         menu = "Frequencies";
@@ -285,7 +285,7 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "10 Hz"){
-        flag = true;
+        inTreatment = true;
         updateMenuCounter = 0;
         menuType = 1;
         menu = "Frequencies";
@@ -299,7 +299,7 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "20 Hz"){
-        flag = true;
+        inTreatment = true;
         updateMenuCounter = 0;
         menuType = 2;
         menu = "Frequencies";
@@ -325,7 +325,7 @@ void MainWindow::backMenuHandler(QString s)
         menu = "";
         programTimer->stop();
         power.setPower(0);
-        flag=false;
+        inTreatment=false;
         ui->timeLabel->clear();
         ui->count->clear();
         ui->powerLabel->clear();
@@ -339,7 +339,7 @@ void MainWindow::backMenuHandler(QString s)
         menu = "";
         programTimer->stop();
         power.setPower(0);
-        flag=false;
+        inTreatment=false;
         ui->timeLabel->clear();
         ui->count->clear();
         ui->powerLabel->clear();
@@ -381,7 +381,7 @@ void MainWindow::on_powerButton_clicked()
 
 void MainWindow::on_leftButton_clicked()
 {
-    if (flag == true) {
+    if (inTreatment == true) {
     power.decreasePower();
     if (electrodesConnected){
         b.setDegen(power.getPower());
@@ -392,7 +392,7 @@ void MainWindow::on_leftButton_clicked()
 }
 void MainWindow::on_rightButton_clicked()
 {
-    if (flag == true) {
+    if (inTreatment == true) {
     power.increasePower();
     if (electrodesConnected){
         b.setDegen(power.getPower());

@@ -22,7 +22,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     Battery b;
-    bool flag;          // To debug the left/right buttons
+    bool inTreatment;          // To debug the left/right buttons
     bool powerOn = false;
     bool electrodesConnected = false;
     PowerLevel power;
