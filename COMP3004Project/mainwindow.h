@@ -38,6 +38,8 @@ public:
 public slots:
     void toggleButtons();
 private slots:
+    void treatmentBack(std::vector<QString> t);
+
     void batteryBeep ();
 
     void on_downButton_clicked();
@@ -80,6 +82,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    int progOrFreq = 0;
     frequencyMenu freqMenu;
     programsMenu progsMenu;
 

@@ -31,6 +31,7 @@ void MainWindow::power_on(){
     ui->powerLabel->clear();
     ui->power->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: white;}""");
+    ui->trodeButton->setStyleSheet("background-color: red");
     setMainMenu();
     ui->menuLabel->setText("Main Menu");
     on_downButton_clicked();
@@ -47,6 +48,9 @@ void MainWindow::power_off(){
     ui->batteryTag->clear();
     ui->listWidget->clear();
     ui->menuLabel->clear();
+    ui->trodeButton->setStyleSheet(ui->backButton->styleSheet());
+    electrodesConnected=false;
+
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
     batteryTimer->stop();
     programTimer->stop();
@@ -106,6 +110,9 @@ void MainWindow::updateProgramTimer(){
     else{//menu == "Programs"
         if (updateMenuCounter >= progsMenu.getPrograms()[menuType].getTime()){                                            //if the treatment has reached its end
             programTimer->stop();
+            timerText.clear();
+            backMenuHandler("");
+            return;
         }
         else if ((electrodesConnected) == (true && updateMenuCounter <= progsMenu.getPrograms()[menuType].getTime())){       //if electrodes are on...
             updateMenuCounter++;
@@ -133,6 +140,7 @@ void MainWindow::on_trodeButton_clicked()
     if (electrodesConnected){
         electrodesConnected = false;
         b.setDegen(1);
+       ui->trodeButton->setStyleSheet("background-color: red");
     }
     else{
         electrodesConnected = true;
@@ -142,12 +150,14 @@ void MainWindow::on_trodeButton_clicked()
         else{
         b.setDegen(power.getPower());
         }
+        ui->trodeButton->setStyleSheet("background-color: green");
 
     }
 }
 
 void MainWindow::on_homeButton_clicked(){
     menu = "";
+    electrodesConnected = false;
     programTimer->stop();
     power.setPower(0);
     inTreatment=false;
@@ -177,8 +187,12 @@ void MainWindow::on_selectButton_clicked()
 
 void MainWindow::on_backButton_clicked()
 {
+    if (progOrFreq >= 1){
+        backMenuHandler("");
+    }
+    else{
     backMenuHandler(ui->listWidget->currentItem()->text());
-    programTimer->stop();
+    }
 }
 
 
@@ -221,6 +235,7 @@ void MainWindow::selectMenuHandler(QString s)
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "Allergy"){
+        progOrFreq = 1;
         inTreatment = true;
         updateMenuCounter = 0;
         menuType = 0;
@@ -236,6 +251,7 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "Pain"){
+        progOrFreq = 1;
         inTreatment = true;
         updateMenuCounter = 0;
         menuType = 1;
@@ -250,6 +266,7 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "Bloating"){
+        progOrFreq = 1;
         inTreatment = true;
         updateMenuCounter = 0;
         menuType = 2;
@@ -265,9 +282,9 @@ void MainWindow::selectMenuHandler(QString s)
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "1.0-9.9 Hz"){
+        progOrFreq = 2;
         inTreatment = true;
         updateMenuCounter = 0;
-        menuType = 0;
         menu = "Frequencies";
         programTime->setHMS(0,0,0);
         ui->listWidget->clear();
@@ -279,9 +296,9 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "10 Hz"){
+        progOrFreq = 2;
         inTreatment = true;
         updateMenuCounter = 0;
-        menuType = 1;
         menu = "Frequencies";
         programTime->setHMS(0,0,0);
         ui->listWidget->clear();
@@ -293,9 +310,9 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
     else if (s == "20 Hz"){
+        progOrFreq = 2;
         inTreatment = true;
         updateMenuCounter = 0;
-        menuType = 2;
         menu = "Frequencies";
         programTime->setHMS(0,0,0);
         ui->listWidget->clear();
@@ -342,7 +359,15 @@ void MainWindow::backMenuHandler(QString s)
         //setheader to "Programs"
         on_downButton_clicked();
     } */
-
+    if (progOrFreq == 1){
+        treatmentBack(programs);
+        ui->menuLabel->setText("Program");
+    }
+    else if (progOrFreq == 2){
+        treatmentBack(frequencies);
+        ui->menuLabel->setText("Frequency");
+    }
+    progOrFreq = 0;
     if (count(programs.begin(), programs.end(),  s) > 0 || count(frequencies.begin(), frequencies.end(),  s) > 0 ) // || count(settingsS.begin(), settingsS.end(),  s) > 0
     {
         setMainMenu();
@@ -353,6 +378,21 @@ void MainWindow::backMenuHandler(QString s)
 
 }
 
+void MainWindow::treatmentBack(std::vector<QString> t){
+    electrodesConnected = false;
+    ui->trodeButton->setStyleSheet("background-color: red");
+    menu = "";
+    programTimer->stop();
+    power.setPower(0);
+    inTreatment=false;
+    ui->timeLabel->clear();
+    ui->count->clear();
+    ui->powerLabel->clear();
+    ui->power->clear();
+    updateList(t);
+    //setheader to "Programs"
+    on_downButton_clicked();
+}
 
 void MainWindow::setMainMenu()
 {
