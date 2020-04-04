@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
+    connect(batteryTimer, SIGNAL(timeout()), this, SLOT(updateCaption()));
     connect(programTimer, SIGNAL(timeout()), this, SLOT(updateProgramTimer()));
     power_off();
     //to be used for the battery class
@@ -36,7 +36,7 @@ void MainWindow::power_on(){
     power.setPower(0);
     electrodesConnected = false;
     ui->batteryTag->setText(QString::number(round(b.getPercentage())));
-    timer->start(5000);//"tick" rate for battery
+    batteryTimer->start(5000);//"tick" rate for battery
 }
 
 void MainWindow::power_off(){
@@ -47,7 +47,7 @@ void MainWindow::power_off(){
     ui->listWidget->clear();
     ui->menuLabel->clear();
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
-    timer->stop();
+    batteryTimer->stop();
     programTimer->stop();
 }
 

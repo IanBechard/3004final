@@ -26,7 +26,7 @@ public:
     bool powerOn = false;
     bool electrodesConnected = false;
     PowerLevel power;
-    QTimer *timer = new QTimer(this);
+    QTimer *batteryTimer = new QTimer(this);
     QTimer *programTimer = new QTimer(this);
     QTime *programTime = new QTime(0,0,0);
     int updateMenuCounter = 0;
