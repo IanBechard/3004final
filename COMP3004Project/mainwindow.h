@@ -38,6 +38,8 @@ public:
 public slots:
     void toggleButtons();
 private slots:
+    void batteryBeep ();
+
     void on_downButton_clicked();
 
     void on_upButton_clicked();

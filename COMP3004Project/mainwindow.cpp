@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 //runs every second
 
 void MainWindow::power_on(){
+    menu = "";
+    batteryBeep();
     power.setPower(0);
     flag=false;
     powerOn=true;
@@ -47,6 +49,13 @@ void MainWindow::power_off(){
     ui->listWidget->setStyleSheet("""QListWidget{background: black;}""");
     timer->stop();
     programTimer->stop();
+}
+
+void MainWindow::batteryBeep(){
+    if (b.getPercentage() <= 10) {
+        // Send signal to speaker, make a beep
+    }
+
 }
 
 void MainWindow::toggleButtons(){
@@ -134,6 +143,7 @@ void MainWindow::on_trodeButton_clicked()
 }
 
 void MainWindow::on_homeButton_clicked(){
+    menu = "";
     programTimer->stop();
     power.setPower(0);
     flag=false;
@@ -153,7 +163,12 @@ void MainWindow::on_upButton_clicked()
 
 void MainWindow::on_selectButton_clicked()
 {
-    selectMenuHandler(ui->listWidget->currentItem()->text());
+    if (menu == "Frequencies") {
+        // DO NOTHING
+    }
+    else {
+     selectMenuHandler(ui->listWidget->currentItem()->text());
+    }
 }
 
 void MainWindow::on_backButton_clicked()
@@ -188,7 +203,6 @@ int MainWindow::validSelection(int x, int count)
 
 void MainWindow::selectMenuHandler(QString s)
 {
-
     if (s == "Program"){
         updateList(progsMenu.getProgramsNames());
         ui->menuLabel->setText("Program");
@@ -302,34 +316,41 @@ void MainWindow::backMenuHandler(QString s)
     std::vector<QString> frequencies  = freqMenu.getFrequenciesNames();
     std::vector<QString> settingsS  = settMenu.getSettingsSNames();
 
+/*  ATTEMPTED FIX BY TRISTAN. SHOULD BE SOMETHING LIKE THIS FOR FINAL IMPLEMENTATION I JUST DON'T KNOW HOW THE count() FUNCTION WORKS.
+    if (menu == "Frequencies") {
+        menu = "";
+        programTimer->stop();
+        power.setPower(0);
+        flag=false;
+        ui->timeLabel->clear();
+        ui->count->clear();
+        ui->powerLabel->clear();
+        ui->power->clear();
+        updateList(freqMenu.getFrequenciesNames());
+        ui->menuLabel->setText("Frequency");
+        //setheader to "Frequencies"
+        on_downButton_clicked();
+    }
+    else if (menu == "Programs") {
+        menu = "";
+        programTimer->stop();
+        power.setPower(0);
+        flag=false;
+        ui->timeLabel->clear();
+        ui->count->clear();
+        ui->powerLabel->clear();
+        ui->power->clear();
+        updateList(progsMenu.getProgramsNames());
+        ui->menuLabel->setText("Program");
+        //setheader to "Programs"
+        on_downButton_clicked();
+    } */
+
     if (count(programs.begin(), programs.end(),  s) > 0 || count(frequencies.begin(), frequencies.end(),  s) > 0 || count(settingsS.begin(), settingsS.end(),  s) > 0) // || count(settingsS.begin(), settingsS.end(),  s) > 0
     {
         setMainMenu();
         ui->menuLabel->setText("Main Menu");
         //set header to main menu
-        on_downButton_clicked();
-    }
-    else if(s == "1.0-9.9 Hz" || s == "10 Hz" || s == "20 Hz")
-    {
-        programTimer->stop();
-        updateList(progsMenu.getProgramsNames());
-        ui->menuLabel->setText("Program");
-        //setheader to "Programs"
-        on_downButton_clicked();
-
-        /* THINGS TO DO WHEN HEADED BACK TO PROGRAMS/FREQUENCIES
-            ui->timeLabel->clear();
-            ui->count->clear();
-            ui->powerLabel->clear();
-            ui->power->clear();
-            flag = false;
-        */
-    }
-    else {
-        programTimer->stop();
-        updateList(freqMenu.getFrequenciesNames());
-        ui->menuLabel->setText("Frequency");
-        //setheader to "Frequencies"
         on_downButton_clicked();
     }
 
