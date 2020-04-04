@@ -219,12 +219,6 @@ void MainWindow::selectMenuHandler(QString s)
         //setheader to "Frequencies"
         on_downButton_clicked();
     }
-    else if (s == "Settings"){
-        updateList(settMenu.getSettingsSNames());
-        ui->menuLabel->setText("Settings");
-        //setheader to "SettingsS"
-        on_downButton_clicked();
-    }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "Allergy"){
         inTreatment = true;
@@ -318,7 +312,6 @@ void MainWindow::backMenuHandler(QString s)
 {
     std::vector<QString> programs = progsMenu.getProgramsNames();
     std::vector<QString> frequencies  = freqMenu.getFrequenciesNames();
-    std::vector<QString> settingsS  = settMenu.getSettingsSNames();
 
 /*  ATTEMPTED FIX BY TRISTAN. SHOULD BE SOMETHING LIKE THIS FOR FINAL IMPLEMENTATION I JUST DON'T KNOW HOW THE count() FUNCTION WORKS.
     if (menu == "Frequencies") {
@@ -350,7 +343,7 @@ void MainWindow::backMenuHandler(QString s)
         on_downButton_clicked();
     } */
 
-    if (count(programs.begin(), programs.end(),  s) > 0 || count(frequencies.begin(), frequencies.end(),  s) > 0 || count(settingsS.begin(), settingsS.end(),  s) > 0) // || count(settingsS.begin(), settingsS.end(),  s) > 0
+    if (count(programs.begin(), programs.end(),  s) > 0 || count(frequencies.begin(), frequencies.end(),  s) > 0 ) // || count(settingsS.begin(), settingsS.end(),  s) > 0
     {
         setMainMenu();
         ui->menuLabel->setText("Main Menu");

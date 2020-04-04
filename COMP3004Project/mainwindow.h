@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <programsmenu.h>
 #include <frequencymenu.h>
-#include <settingsmenu.h>
 #include <battery.h>
 #include <qtimer.h>
 #include <QTime>
@@ -83,7 +82,6 @@ private:
     Ui::MainWindow *ui;
     frequencyMenu freqMenu;
     programsMenu progsMenu;
-    settingsMenu settMenu;
 
 };
 

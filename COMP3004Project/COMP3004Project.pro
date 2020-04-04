@@ -30,9 +30,7 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         program.cpp \
-        programsmenu.cpp \
-        settings.cpp \
-        settingsmenu.cpp
+        programsmenu.cpp
 
 HEADERS += \
         battery.h \
@@ -41,9 +39,7 @@ HEADERS += \
         mainwindow.h \
         powerlevel.h \
         program.h \
-        programsmenu.h \
-        settings.h \
-        settingsmenu.h
+        programsmenu.h
 
 FORMS += \
         mainwindow.ui
