@@ -58,7 +58,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>back</string>
+     <string>Back</string>
     </property>
    </widget>
    <widget class="QPushButton" name="trodeButton">
@@ -89,7 +89,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>up</string>
+     <string>Up</string>
     </property>
    </widget>
    <widget class="QPushButton" name="selectButton">
@@ -102,7 +102,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>select</string>
+     <string>Select</string>
     </property>
    </widget>
    <widget class="QPushButton" name="rightButton">
@@ -115,7 +115,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>right</string>
+     <string>Right</string>
     </property>
    </widget>
    <widget class="QPushButton" name="leftButton">
@@ -128,7 +128,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>left</string>
+     <string>Left</string>
     </property>
    </widget>
    <widget class="QPushButton" name="downButton">
@@ -141,7 +141,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>down</string>
+     <string>Down</string>
     </property>
    </widget>
    <widget class="QPushButton" name="powerButton">
@@ -154,7 +154,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>power</string>
+     <string>Power</string>
     </property>
    </widget>
    <widget class="QLabel" name="batteryTag">

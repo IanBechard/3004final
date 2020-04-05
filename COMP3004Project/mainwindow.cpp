@@ -158,8 +158,10 @@ void MainWindow::on_trodeButton_clicked()
 void MainWindow::on_homeButton_clicked(){
     menu = "";
     electrodesConnected = false;
+    ui->trodeButton->setStyleSheet("background-color: red");
     programTimer->stop();
     power.setPower(0);
+    b.setDegen(1);
     inTreatment=false;
     ui->timeLabel->clear();
     ui->count->clear();
@@ -282,49 +284,31 @@ void MainWindow::selectMenuHandler(QString s)
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     else if (s == "1.0-9.9 Hz"){
-        progOrFreq = 2;
-        inTreatment = true;
-        updateMenuCounter = 0;
-        menu = "Frequencies";
-        programTime->setHMS(0,0,0);
-        ui->listWidget->clear();
-        ui->timeLabel->setText("Time: ");
-        ui->powerLabel->setText("Power: ");
-        ui->power->setText("0");
-        ui->count->setText(programTime->toString("mm:ss"));
-        programTimer->start(1000);
+        startFrequency();
 
     }
     else if (s == "10 Hz"){
-        progOrFreq = 2;
-        inTreatment = true;
-        updateMenuCounter = 0;
-        menu = "Frequencies";
-        programTime->setHMS(0,0,0);
-        ui->listWidget->clear();
-        ui->timeLabel->setText("Time: ");
-        ui->powerLabel->setText("Power: ");
-        ui->power->setText("0");
-        ui->count->setText(programTime->toString("mm:ss"));
-        programTimer->start(1000);
+        startFrequency();
 
     }
     else if (s == "20 Hz"){
-        progOrFreq = 2;
-        inTreatment = true;
-        updateMenuCounter = 0;
-        menu = "Frequencies";
-        programTime->setHMS(0,0,0);
-        ui->listWidget->clear();
-        ui->timeLabel->setText("Time: ");
-        ui->powerLabel->setText("Power: ");
-        ui->power->setText("0");
-        ui->count->setText(programTime->toString("mm:ss"));
-        programTimer->start(1000);
+        startFrequency();
 
     }
 }
-
+void MainWindow::startFrequency(){
+    progOrFreq = 2;
+    inTreatment = true;
+    updateMenuCounter = 0;
+    menu = "Frequencies";
+    programTime->setHMS(0,0,0);
+    ui->listWidget->clear();
+    ui->timeLabel->setText("Time: ");
+    ui->powerLabel->setText("Power: ");
+    ui->power->setText("0");
+    ui->count->setText(programTime->toString("mm:ss"));
+    programTimer->start(1000);
+}
 void MainWindow::backMenuHandler(QString s)
 {
     std::vector<QString> programs = progsMenu.getProgramsNames();

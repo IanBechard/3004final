@@ -42,6 +42,8 @@ private slots:
 
     void batteryBeep ();
 
+    void startFrequency();
+
     void on_downButton_clicked();
 
     void on_upButton_clicked();
