@@ -23,7 +23,7 @@ void MainWindow::power_on(){
     menu = "";
     batteryBeep();
     power.setPower(0);
-
+    progOrFreq = 0;
     inTreatment=false;
     powerOn=true;
     toggleButtons();
