@@ -150,14 +150,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
 /*  down handler
- *  validates
+ *  validates selection in a menu
  */
 void MainWindow::on_downButton_clicked()
 {
     ui->listWidget->setCurrentRow(validSelection(ui->listWidget->currentRow() + 1, ui->listWidget->count()));
 }
 
+
+/*  electrode button handler
+ *  enables/disables electrodes being connected
+ */
 void MainWindow::on_trodeButton_clicked()
 {
     if (electrodesConnected){
@@ -178,8 +183,13 @@ void MainWindow::on_trodeButton_clicked()
     }
 }
 
+
+/*  home button handler
+ *  brings user back to the home/main screen and resets all data
+ */
 void MainWindow::on_homeButton_clicked(){
     menu = "";
+    progOrFreq = 0;
     electrodesConnected = false;
     ui->trodeButton->setStyleSheet("background-color: red");
     programTimer->stop();
@@ -195,11 +205,19 @@ void MainWindow::on_homeButton_clicked(){
     on_downButton_clicked();
 }
 
+
+/*  up button handler
+ *  validates selection in a menu
+ */
 void MainWindow::on_upButton_clicked()
 {
     ui->listWidget->setCurrentRow(validSelection(ui->listWidget->currentRow() - 1, ui->listWidget->count()));
 }
 
+
+/*  select button handler
+ *  goes deeper in the menu based upon selection, or does nothing if in a treatment
+ */
 void MainWindow::on_selectButton_clicked()
 {
     if (progOrFreq >= 1) {
@@ -210,6 +228,9 @@ void MainWindow::on_selectButton_clicked()
     }
 }
 
+/*  back button handler
+ *  calls function that brings user back one menu based on current state
+ */
 void MainWindow::on_backButton_clicked()
 {
     if (progOrFreq >= 1){
@@ -220,7 +241,9 @@ void MainWindow::on_backButton_clicked()
     }
 }
 
-
+/*  updateList()
+ *  updates the menu based upon user selection
+ */
 void MainWindow::updateList(std::vector<QString> l)
 {
     ui->listWidget->clear();
@@ -244,6 +267,9 @@ int MainWindow::validSelection(int x, int count)
 
 }
 
+/*  selectMenuHandler()
+ *  brings user into the treatment menu
+ */
 void MainWindow::selectMenuHandler(QString s)
 {
     if (s == "Program"){
@@ -319,6 +345,10 @@ void MainWindow::selectMenuHandler(QString s)
 
     }
 }
+
+/*  startFrequency()
+ *  initializes frequency start
+ */
 void MainWindow::startFrequency(){
     progOrFreq = 2;
     inTreatment = true;
@@ -332,40 +362,15 @@ void MainWindow::startFrequency(){
     ui->count->setText(programTime->toString("mm:ss"));
     programTimer->start(1000);
 }
+
+
+/*  backMenuHandler
+ *  brings user back 1 menu based on their current state
+ */
 void MainWindow::backMenuHandler(QString s)
 {
     std::vector<QString> programs = progsMenu.getProgramsNames();
     std::vector<QString> frequencies  = freqMenu.getFrequenciesNames();
-
-/*  ATTEMPTED FIX BY TRISTAN. SHOULD BE SOMETHING LIKE THIS FOR FINAL IMPLEMENTATION I JUST DON'T KNOW HOW THE count() FUNCTION WORKS.
-    if (menu == "Frequencies") {
-        menu = "";
-        programTimer->stop();
-        power.setPower(0);
-        inTreatment=false;
-        ui->timeLabel->clear();
-        ui->count->clear();
-        ui->powerLabel->clear();
-        ui->power->clear();
-        updateList(freqMenu.getFrequenciesNames());
-        ui->menuLabel->setText("Frequency");
-        //setheader to "Frequencies"
-        on_downButton_clicked();
-    }
-    else if (menu == "Programs") {
-        menu = "";
-        programTimer->stop();
-        power.setPower(0);
-        inTreatment=false;
-        ui->timeLabel->clear();
-        ui->count->clear();
-        ui->powerLabel->clear();
-        ui->power->clear();
-        updateList(progsMenu.getProgramsNames());
-        ui->menuLabel->setText("Program");
-        //setheader to "Programs"
-        on_downButton_clicked();
-    } */
     if (progOrFreq == 1){
         treatmentBack(programs);
         ui->menuLabel->setText("Program");
@@ -385,6 +390,9 @@ void MainWindow::backMenuHandler(QString s)
 
 }
 
+/*  treatmentBack()
+ *  called when a user is in the treatment menu and presses back
+ */
 void MainWindow::treatmentBack(std::vector<QString> t){
     electrodesConnected = false;
     ui->trodeButton->setStyleSheet("background-color: red");
@@ -400,14 +408,18 @@ void MainWindow::treatmentBack(std::vector<QString> t){
     //setheader to "Programs"
     on_downButton_clicked();
 }
-
+/*  setMainMenu()
+ *  puts user to main menu
+ */
 void MainWindow::setMainMenu()
 {
     std::vector<QString> mainmenu{"Program", "Frequency", "MED", "Screening", "Children", "Settings"};
     updateList(mainmenu);
 }
 
-
+/*  power button handler
+ *  toggles power on and off depending on battery % and if device is already in on or off state
+ */
 void MainWindow::on_powerButton_clicked()
 {
     if (!powerOn && b.getPercentage() > 0){
@@ -419,6 +431,9 @@ void MainWindow::on_powerButton_clicked()
 }
 
 
+/*  left button handler
+ *  decreases power level if possible
+ */
 void MainWindow::on_leftButton_clicked()
 {
     if (inTreatment == true) {
@@ -430,6 +445,10 @@ void MainWindow::on_leftButton_clicked()
     ui->power->setText(QString::number(power.getPower()));
     }
 }
+
+/*  right button handler
+ *  increases power level if possible
+ */
 void MainWindow::on_rightButton_clicked()
 {
     if (inTreatment == true) {
@@ -442,7 +461,9 @@ void MainWindow::on_rightButton_clicked()
 }
 
 //
-
+/*  timerFormat
+ *  converts int to a stringed time format
+ */
 QString MainWindow::timerFormat(int time){
     QString theString = "";
 
