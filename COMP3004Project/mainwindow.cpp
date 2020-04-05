@@ -8,16 +8,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(batteryTimer, SIGNAL(timeout()), this, SLOT(updateCaption()));
-    connect(programTimer, SIGNAL(timeout()), this, SLOT(updateProgramTimer()));
+    connect(batteryTimer, SIGNAL(timeout()), this, SLOT(updateCaption())); //initialize battery timer
+    connect(programTimer, SIGNAL(timeout()), this, SLOT(updateProgramTimer())); //initialize program/frequency timers
     power_off();
-    //to be used for the battery class
 
 
 }
 
-//runs every second
 
+/*  power_on();
+ *  initializes device, bringing user to home screen and enabling battery depletion
+ */
 void MainWindow::power_on(){
     menu = "";
     batteryBeep();
@@ -41,6 +42,10 @@ void MainWindow::power_on(){
     batteryTimer->start(5000);//"tick" rate for battery
 }
 
+
+/*  power_off();
+ *  resets device, disables buttons, interface and battery depletion
+ */
 void MainWindow::power_off(){
     powerOn=false;
     toggleButtons();
@@ -55,13 +60,19 @@ void MainWindow::power_off(){
     batteryTimer->stop();
     programTimer->stop();
 }
-
+/*  batteryBeep();
+ *  called when low battery warning is needed
+ */
 void MainWindow::batteryBeep(){
         ui->batteryTag->setText("LOW BATTERY");
 
 
 }
 
+
+/*  toggleButtons();
+ *  for toggling button functionality on/off for power cycling
+ */
 void MainWindow::toggleButtons(){
     if (powerOn){
     ui->backButton->setEnabled(true);
@@ -85,6 +96,9 @@ void MainWindow::toggleButtons(){
     }
 }
 
+/*  updateCaption();
+ *  runs every x seconds, depleting the battery based on power level
+ */
 void MainWindow::updateCaption(){
     b.degenerate();
     ui->batteryTag->setText(QString::number(round(b.getPercentage())));
@@ -97,6 +111,9 @@ void MainWindow::updateCaption(){
     }
 }
 
+/*  updateProgramTimer();
+ *  runs every second when in a treatment, depending on treatment option chosen by user
+ */
 void MainWindow::updateProgramTimer(){
 
     if(menu == "Frequencies"){
@@ -125,11 +142,17 @@ void MainWindow::updateProgramTimer(){
     ui->count->setText(timerText);
 }
 
+/*  destructor
+ *  closes interface
+ */
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+/*  down handler
+ *  validates
+ */
 void MainWindow::on_downButton_clicked()
 {
     ui->listWidget->setCurrentRow(validSelection(ui->listWidget->currentRow() + 1, ui->listWidget->count()));
@@ -179,7 +202,7 @@ void MainWindow::on_upButton_clicked()
 
 void MainWindow::on_selectButton_clicked()
 {
-    if (menu == "Frequencies") {
+    if (progOrFreq >= 1) {
         // DO NOTHING
     }
     else {
