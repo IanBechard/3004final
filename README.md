@@ -1,7 +1,8 @@
 # 3004final
+MCT Device Simulator written in C++ using Qt for UI
 Final Project for COMP3004 Object-Oriented Software Engineering
 
-MCT Device Simulator written in C++ using Qt for UI
+
 
 
 Made by:
